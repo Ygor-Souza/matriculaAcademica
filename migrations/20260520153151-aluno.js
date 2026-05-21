@@ -42,6 +42,16 @@ module.exports = {
           defaultValue: 'ATIVO'
         },
 
+        status_pre_requisito: {
+          type: Sequelize.ENUM(
+            'nenhum',
+            'aprovado',
+            'pendente'
+          ),
+          allowNull: false,
+          defaultValue: 'nenhum'
+        },
+
         semestreAtual: {
           type: Sequelize.INTEGER,
           allowNull: false,

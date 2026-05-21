@@ -36,6 +36,15 @@ const { DataTypes } = require('sequelize');
         allowNull: false,
         defaultValue: 'ATIVO'
       },
+      status_pre_requisito: {
+        type: DataTypes.ENUM(
+          'nenhum',
+          'aprovado',
+          'pendente'
+        ),
+        allowNull: false,
+        defaultValue: 'nenhum'
+      },
 
       semestreAtual: {
         type: DataTypes.INTEGER,

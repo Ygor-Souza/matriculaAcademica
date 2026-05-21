@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status de aprovação</title>
+</head>
+
+<body>
+
+    <h1>Solicitar quebra de pré-requisito</h1>
+
+    <h3>
+        Nome do aluno: <%=aluno.nome %>
+    </h3>
+
+    <h3>
+        Aluno formando:
+        <%= aluno.formando %>
+    </h3>
+
+    <h3>
+        Status pré-requisito:
+        <%= aluno.status_pre_requisito %>
+    </h3>
+
+    <!-- BOTÃO SOLICITAR -->
+    <form action="/pre-requisito/solicitar/<%= aluno.id %>" method="POST">
+
+        <button type="submit">
+            Solicitar Quebra
+        </button>
+
+    </form>
+
+    <br>
+
+    <!-- BOTÃO APROVAR -->
+    <form action="/pre-requisito/aprovar/<%= aluno.id %>" method="POST">
+
+        <button type="submit">
+            Aprovar Solicitação
+        </button>
+
+    </form>
+
+</body>
+
+</html>

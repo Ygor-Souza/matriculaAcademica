@@ -80,7 +80,98 @@ async function cadastrarAluno(req, res) {
   }
 }
 
+async function telaPreRequisito(req, res){
+
+  try {
+
+    const { id } = req.params;
+
+    const aluno = await Aluno.findByPk(id);
+
+    if (!aluno) {
+      return res.status(404).send("Aluno não encontrado");
+    }
+
+    return res.render(
+      'preRequisito',
+      {
+        aluno
+      }
+    );
+
+  } catch(error){
+
+    console.log(error);
+
+    return res.status(500).send(
+      "Erro ao carregar tela de pré-requisito"
+    );
+
+  }
+
+}
+
+async function solicitarPrerequisito(req, res) {
+    try {
+        const { id } = req.params;
+
+        const aluno = await Aluno.findByPk(id);
+
+        if (!aluno) {
+            return res.status(404).send("Aluno não encontrado.");
+        }
+
+        if (!aluno.formando) {
+            return res.status(403).send(
+                "Somente alunos formandos podem solicitar quebra de pré-requisito."
+            );
+        }
+
+        await Aluno.update(
+            {
+                status_pre_requisito: "pendente"
+            },
+            {
+                where: { id }
+            }
+        );
+
+        return res.redirect(`/pre-requisito/${id}`);
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erro ao solicitar.");
+    }
+}
+
+
+
+async function aprovarPrerequisito(req, res) {
+    try {
+        const { id } = req.params;
+
+        await Aluno.update(
+            {
+                status_pre_requisito: "aprovado"
+            },
+            {
+                where: { id }
+            }
+        );
+
+        return res.redirect(`/pre-requisito/${id}`);
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Erro ao aprovar.");
+    }
+}
+
 module.exports = {
   telaCadastro,
-  cadastrarAluno
+  cadastrarAluno,
+  telaPreRequisito,
+   aprovarPrerequisito,
+  solicitarPrerequisito
+  
 };
