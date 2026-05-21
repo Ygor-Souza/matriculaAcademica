@@ -1,22 +1,18 @@
 const { Op } = require("sequelize");
 const Aluno = require("../models/Aluno");
 
-async function telaCadastro(req, res){
+async function telaCadastro(req, res) {
+  const sucesso = req.query.sucesso === '1';
+  const matriculaGerada = req.query.matricula || null;
 
-  return res.render(
-    'cadastroAluno',
-    {
-      sucesso:false,
-      erro:null,
-      matriculaGerada:null
-    }
-  );
-
+  return res.render('cadastroAluno', {
+    sucesso,
+    erro: null,
+    matriculaGerada
+  });
 }
-async function cadastrarAluno(req, res){
-
-  try{
-
+async function cadastrarAluno(req, res) {
+  try {
     const {
       nome,
       email,
@@ -26,97 +22,64 @@ async function cadastrarAluno(req, res){
       formando
     } = req.body;
 
-    // Validar semestre de ingresso
-    if(
-      semestreIngresso != 1 &&
-      semestreIngresso != 2
-    ){
+    const semestre = Number(semestreIngresso);
+    const ano = Number(anoIngresso);
 
-      return res.render(
-        'cadastroAluno',
-        {
-          sucesso:false,
-          erro:'Semestre de ingresso inválido'
-        }
-      );
-
+    if (semestre !== 1 && semestre !== 2) {
+      return res.render('cadastroAluno', {
+        sucesso: false,
+        erro: 'Semestre de ingresso inválido',
+        matriculaGerada: null
+      });
     }
 
-    // Buscar último aluno cadastrado
+    const alunoExistente = await require('../models/Aluno').findOne({
+      where: { email }
+    });
+
+    if (alunoExistente) {
+      return res.render('cadastroAluno', {
+        sucesso: false,
+        erro: 'Já existe aluno com este e-mail',
+        matriculaGerada: null
+      });
+    }
+
+    const Aluno = require('../models/Aluno');
+
     const ultimoAluno = await Aluno.findOne({
-      order:[
-        ['id', 'DESC']
-      ]
+      order: [['id', 'DESC']]
     });
 
-    // Gerar próximo número
-    let proximoNumero = 1;
+    const proximoNumero = ultimoAluno ? ultimoAluno.id + 1 : 1;
+    const idFormatado = String(proximoNumero).padStart(4, '0');
 
-    if(ultimoAluno){
+    const matricula = `ADS${ano}${semestre}${idFormatado}`;
 
-      proximoNumero =
-        ultimoAluno.id + 1;
-
-    }
-
-    // Formatar ID
-    const idFormatado =
-      String(proximoNumero)
-      .padStart(4, '0');
-
-    // Gerar matrícula
-    const matricula =
-      `ADS${anoIngresso}${semestreIngresso}${idFormatado}`;
-
-    // Definir status automaticamente
-    let statusMatricula = 'ATIVO';
-
-    if(Number(anoIngresso) < 2020){
-
-      statusMatricula = 'TRANCADO';
-
-    }
-
-    // Criar aluno
     await Aluno.create({
-
       nome,
-      matricula,
       email,
-      statusMatricula,
-
-      anoIngresso,
-      semestreIngresso,
+      matricula,
+      anoIngresso: ano,
+      semestreIngresso: semestre,
       semestreAtual,
-
-      formando:
-        formando === 'true'
-
+      formando: formando === 'true',
+      statusMatricula: ano < 2020 ? 'TRANCADO' : 'ATIVO'
     });
 
-    return res.render(
-      'cadastroAluno',
-      {
-        sucesso:true,
-        matriculaGerada:matricula
-      }
-    );
+    return res.redirect(`/cadastro?sucesso=1&matricula=${matricula}`);
 
-  }catch(error){
-
+  } catch (error) {
     console.log(error);
 
-    return res.render(
-      'cadastroAluno',
-      {
-        sucesso:false,
-        erro:'Erro ao cadastrar aluno'
-      }
-    );
-
+    return res.render('cadastroAluno', {
+      sucesso: false,
+      erro: 'Erro ao cadastrar aluno',
+      matriculaGerada: null
+    });
   }
-
 }
+
 module.exports = {
   telaCadastro,
   cadastrarAluno

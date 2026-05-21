@@ -93,6 +93,46 @@ button{
   cursor:pointer;
 }
 
+.erro-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(220, 38, 38, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.erro-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 350px;
+  text-align: center;
+  border-top: 5px solid #dc2626;
+  animation: aparecer 0.25s ease;
+}
+
+.erro-content h2 {
+  color: #dc2626;
+  margin-bottom: 10px;
+}
+
+.erro-content p {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.erro-content button {
+  padding: 10px 20px;
+  border: none;
+  background: #dc2626;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
 @keyframes aparecer{
 
   from{

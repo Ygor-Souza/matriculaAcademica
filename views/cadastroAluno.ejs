@@ -2,189 +2,103 @@
 <html lang="pt-br">
 
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>
-    Cadastro de Aluno
-  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Aluno</title>
 
   <link rel="stylesheet" href="/css/cadastroAluno.css">
-
 </head>
 
 <body>
 
   <form action="/alunos/cadastro" method="POST">
 
-    <h1>
-      Cadastro de Aluno
-    </h1>
+    <h1>Cadastro de Aluno</h1>
 
     <div class="info">
-
-      <p>
-        A matrícula será gerada automaticamente.
-      </p>
-
-      <p>
-        Padrão:
-        <strong>
-          ADS + Ano + Semestre + ID
-        </strong>
-      </p>
-
+      <p>A matrícula será gerada automaticamente.</p>
+      <p>Padrão: <strong>ADS + Ano + Semestre + ID</strong></p>
     </div>
 
-    <% if(erro){ %>
-
+    <% if (erro) { %>
       <div class="erro">
-
-        <p>
-          <%= erro %>
-        </p>
-
+        <p><%= erro %></p>
       </div>
-
     <% } %>
 
     <div class="campo">
-
-      <label>
-        Nome do Aluno
-      </label>
-
-      <input
-        type="text"
-        name="nome"
-        required
-      >
-
+      <label>Nome do Aluno</label>
+      <input type="text" name="nome" required>
     </div>
 
     <div class="campo">
-
-      <label>
-        E-mail
-      </label>
-
-      <input
-        type="email"
-        name="email"
-        required
-      >
-
+      <label>E-mail</label>
+      <input type="email" name="email" required>
     </div>
 
     <div class="campo">
-
-      <label>
-        Ano de Ingresso
-      </label>
-
-      <input
-        type="number"
-        name="anoIngresso"
-        min="2000"
-        max="2100"
-        required
-      >
-
+      <label>Ano de Ingresso</label>
+      <input type="number" name="anoIngresso" min="2000" max="2100" required>
     </div>
 
     <div class="campo">
-
-      <label>
-        Semestre de Ingresso
-      </label>
-
+      <label>Semestre de Ingresso</label>
       <select name="semestreIngresso">
-
-        <option value="1">
-          1° Semestre
-        </option>
-
-        <option value="2">
-          2° Semestre
-        </option>
-
+        <option value="1">1° Semestre</option>
+        <option value="2">2° Semestre</option>
       </select>
-
     </div>
 
     <div class="campo">
-
-      <label>
-        Semestre Atual
-      </label>
-
-      <input
-        type="number"
-        name="semestreAtual"
-        min="1"
-        max="10"
-        value="1"
-        required
-      >
-
+      <label>Semestre Atual</label>
+      <input type="number" name="semestreAtual" min="1" max="10" value="1" required>
     </div>
 
     <div class="campo">
-
-      <label>
-        Formando
-      </label>
-
+      <label>Formando</label>
       <select name="formando">
-
-        <option value="false">
-          Não
-        </option>
-
-        <option value="true">
-          Sim
-        </option>
-
+        <option value="false">Não</option>
+        <option value="true">Sim</option>
       </select>
-
     </div>
 
-    <button type="submit">
-
-      Cadastrar Aluno
-
-    </button>
+    <button type="submit">Cadastrar Aluno</button>
 
   </form>
 
-  <% if(sucesso){ %>
+  <!-- MODAL DE SUCESSO -->
+  <% if (sucesso) { %>
 
-    <div class="modal">
+    <div class="modal sucesso-modal" id="modalSucesso">
 
-      <div class="modal-content">
+      <div class="modal-content sucesso-content">
 
-        <h2>
-          Cadastro realizado com sucesso
-        </h2>
+        <h2>Cadastro realizado com sucesso</h2>
 
-        <p>
-          Matrícula gerada:
-        </p>
+        <p>Matrícula gerada:</p>
 
-        <h3>
-          <%= matriculaGerada %>
-        </h3>
+        <h3><%= matriculaGerada %></h3>
 
-        <button onclick="fecharModal()">
+        <button onclick="fecharModal()">Fechar</button>
 
-          Fechar
+      </div>
 
-        </button>
+    </div>
+
+  <% } %>
+
+  <!-- MODAL DE ERRO -->
+  <% if (erro) { %>
+
+    <div class="modal erro-modal" id="modalErro">
+
+      <div class="modal-content erro-content">
+
+        <h2>Erro no cadastro</h2>
+
+        <p><%= erro %></p>
+
+        <button onclick="fecharModalErro()">Fechar</button>
 
       </div>
 
@@ -193,17 +107,16 @@
   <% } %>
 
   <script>
-
-    function fecharModal(){
-
-      document
-        .querySelector('.modal')
-        .style.display = 'none';
-
+    function fecharModal() {
+      const modal = document.getElementById('modalSucesso');
+      if (modal) modal.style.display = 'none';
     }
 
+    function fecharModalErro() {
+      const modal = document.getElementById('modalErro');
+      if (modal) modal.style.display = 'none';
+    }
   </script>
 
 </body>
-
 </html>
