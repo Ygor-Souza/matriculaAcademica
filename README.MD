@@ -57,7 +57,4 @@ npx nodemon index.js
 
 Abra um pull request ou envie issues com sugestões.
 
-## Licença
-
-Licença padrão — ajuste conforme necessário.
 
