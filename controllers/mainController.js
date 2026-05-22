@@ -111,6 +111,63 @@ async function telaPreRequisito(req, res){
 
 }
 
+async function telaCadastroDisciplina(req, res) {
+  try {
+    const sucesso = req.query.sucesso === '1';
+    const erro = req.query.erro || null;
+
+    return res.render('cadastroDisciplina', {
+      sucesso,
+      erro
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Erro ao carregar tela de cadastro de disciplina');
+  }
+}
+
+async function cadastrarDisciplina(req, res) {
+  try {
+    const { nome, cargaHoraria, semestre } = req.body;
+
+    const Disciplina = require('../models/Disciplina');
+
+    await Disciplina.create({
+      nome,
+      cargaHoraria,
+      semestre: Number(semestre)
+    });
+
+    return res.redirect('/disciplinas?sucesso=1');
+  } catch (error) {
+    console.error(error);
+    return res.render('cadastroDisciplina', {
+      sucesso: false,
+      erro: 'Erro ao cadastrar disciplina'
+    });
+  }
+}
+
+async function telaListaDisciplinas(req, res) {
+  try {
+    const Disciplina = require('../models/Disciplina');
+
+    const disciplinas = await Disciplina.findAll({ order: [['id', 'ASC']] });
+
+    const sucesso = req.query.sucesso === '1';
+    const erro = req.query.erro || null;
+
+    return res.render('listaDisciplinas', {
+      disciplinas,
+      sucesso,
+      erro
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Erro ao listar disciplinas');
+  }
+}
+
 async function solicitarPrerequisito(req, res) {
     try {
         const { id } = req.params;
@@ -171,6 +228,9 @@ module.exports = {
   telaCadastro,
   cadastrarAluno,
   telaPreRequisito,
+  telaCadastroDisciplina,
+  cadastrarDisciplina,
+  telaListaDisciplinas,
    aprovarPrerequisito,
   solicitarPrerequisito
   

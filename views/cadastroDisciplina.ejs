@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Disciplina</title>
+
+    <link rel="stylesheet" href="/css/cadastroAluno.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <form action="/disciplinas/cadastro" method="POST">
+
+            <h1>Cadastro de Disciplina</h1>
+
+
+
+
+            <% if (erro) { %>
+                <div class="erro">
+                    <p>
+                        <%= erro %>
+                    </p>
+                </div>
+                <% } %>
+
+                    <div class="campo">
+                        <label>Nome da Disciplina</label>
+                        <input type="text" name="nome" required>
+                    </div>
+
+                    <div class="campo">
+                        <label>Carga Horaria</label>
+                        <input type="time" name="cargaHoraria" required>
+                    </div>
+
+                    <div class="campo">
+                        <label>Semestre da Disciplina</label>
+                        <select name="semestre">
+                            <option value="1">1° Semestre</option>
+                            <option value="2">2° Semestre</option>
+                            <option value="3">3° Semestre</option>
+                            <option value="4">4° Semestre</option>
+                            <option value="5">5° Semestre</option>
+                        </select>
+                    </div>
+
+                    <button type="submit">Cadastrar Disciplina</button>
+                    <a href="/disciplinas" class="btn-voltar">Ver todas as disciplinas</a>
+
+        </form>
+
+    </div>
+
+    <!-- MODAL DE SUCESSO -->
+    <% if (sucesso) { %>
+
+        <div class="modal sucesso-modal" id="modalSucesso">
+
+            <div class="modal-content sucesso-content">
+
+                <h2>Cadastro realizado com sucesso</h2>
+
+                <button onclick="fecharModal()">Fechar</button>
+
+            </div>
+
+        </div>
+
+        <% } %>
+
+            <!-- MODAL DE ERRO -->
+            <% if (erro) { %>
+
+                <div class="modal erro-modal" id="modalErro">
+
+                    <div class="modal-content erro-content">
+
+                        <h2>Erro no cadastro</h2>
+
+                        <p>
+                            <%= erro %>
+                        </p>
+
+                        <button onclick="fecharModalErro()">Fechar</button>
+
+                    </div>
+
+                </div>
+
+                <% } %>
+
+                    <script>
+                        function fecharModal() {
+                            const modal = document.getElementById('modalSucesso');
+                            if (modal) modal.style.display = 'none';
+                        }
+
+                        function fecharModalErro() {
+                            const modal = document.getElementById('modalErro');
+                            if (modal) modal.style.display = 'none';
+                        }
+                    </script>
+
+</body>
+
+</html>

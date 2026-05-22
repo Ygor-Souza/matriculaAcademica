@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Disciplinas</title>
+    <link rel="stylesheet" href="/css/disciplina.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Disciplinas Cadastradas</h1>
+
+        <a href="/cadastro-disciplina">Cadastrar nova disciplina</a>
+
+        <% if (disciplinas && disciplinas.length> 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Carga Horária</th>
+                        <th>Semestre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% disciplinas.forEach(function(d) { %>
+                        <tr>
+                            <td>
+                                <%= d.id %>
+                            </td>
+                            <td>
+                                <%= d.nome %>
+                            </td>
+                            <td>
+                                <%= d.cargaHoraria %>
+                            </td>
+                            <td>
+                                <%= d.semestre %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <% } else { %>
+                <p>Nenhuma disciplina cadastrada.</p>
+                <% } %>
+
+    </div>
+
+</body>
