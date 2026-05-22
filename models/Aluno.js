@@ -39,7 +39,6 @@ const { DataTypes } = require('sequelize');
       status_pre_requisito: {
         type: DataTypes.ENUM(
           'nenhum',
-          'aprovado',
           'pendente'
         ),
         allowNull: false,

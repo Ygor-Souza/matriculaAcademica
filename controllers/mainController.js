@@ -203,26 +203,7 @@ async function solicitarPrerequisito(req, res) {
 
 
 
-async function aprovarPrerequisito(req, res) {
-    try {
-        const { id } = req.params;
 
-        await Aluno.update(
-            {
-                status_pre_requisito: "aprovado"
-            },
-            {
-                where: { id }
-            }
-        );
-
-        return res.redirect(`/pre-requisito/${id}`);
-
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send("Erro ao aprovar.");
-    }
-}
 
 module.exports = {
   telaCadastro,
@@ -231,7 +212,6 @@ module.exports = {
   telaCadastroDisciplina,
   cadastrarDisciplina,
   telaListaDisciplinas,
-   aprovarPrerequisito,
   solicitarPrerequisito
   
 };

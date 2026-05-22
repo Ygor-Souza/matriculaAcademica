@@ -45,7 +45,6 @@ module.exports = {
         status_pre_requisito: {
           type: Sequelize.ENUM(
             'nenhum',
-            'aprovado',
             'pendente'
           ),
           allowNull: false,
