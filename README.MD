@@ -82,41 +82,32 @@ Exemplo:
 
 ```bash
 npm install
+
+
+
 ```
 
 ### 2. Configurar o banco de dados
 
-Edite o arquivo:
 
 ```bash
-config/config.json
+npx sequelize-cli db:create   
 ```
 
-Informe o usuário, senha, nome do banco, host e dialect.
 
-### 3. Criar o banco de dados
-
-Crie um banco no MySQL com o mesmo nome informado no `config/config.json`.
-
-Exemplo:
-
-```sql
-CREATE DATABASE matricula;
-```
-
-### 4. Executar as migrations
+### 3. Executar as migrations
 
 ```bash
 npx sequelize-cli db:migrate
 ```
 
-### 5. Iniciar o servidor
+### 4. Iniciar o servidor
 
 ```bash
 node index.js
 ```
 
-### 6. Acessar no navegador
+### 5. Acessar no navegador
 
 Abra:
 
@@ -124,12 +115,4 @@ Abra:
 http://localhost:3000
 ```
 
-Caso esteja usando outra porta, acesse a porta configurada no projeto.
 
-### 7. Rodar em modo desenvolvimento
-
-Opcionalmente, use o nodemon:
-
-```bash
-npx nodemon index.js
-```
