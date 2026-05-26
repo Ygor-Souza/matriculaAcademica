@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Pré-requisito</title>
+  <link rel="stylesheet" href="../css/cadastroAluno.css">
+</head>
+
+<body>
+
+  <form>
+    <h1>Pré-requisito</h1>
+    <a href="/" class="btn-voltar">← Voltar ao Menu</a>
+
+    <div class="info">
+      <p>Selecione um aluno para solicitar pré-requisito.</p>
+    </div>
+
+    <% alunos.forEach(aluno => { %>
+      <div class="campo">
+        <a href="/pre-requisito/<%= aluno.id %>">
+          <%= aluno.nome %> - <%= aluno.matricula %>
+        </a>
+      </div>
+    <% }) %>
+  </form>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro de Matrícula</title>
+
+    <link rel="stylesheet" href="/css/cadastroAluno.css">
+</head>
+
+<body>
+
+    <form action="/cadastro-matricula" method="POST">
+
+        <h1>Cadastro de Matrícula</h1>
+        <a href="/" class="btn-voltar">← Voltar ao Menu</a>
+
+        <div class="info">
+            <p>O aluno só poderá se matricular em disciplinas do próximo semestre.</p>
+            <p>Exemplo: aluno no <strong>2º semestre</strong> só pode se matricular no <strong>3º semestre</strong>.</p>
+        </div>
+
+        <% if (erro) { %>
+            <div class="erro">
+                <p>
+                    <%= erro %>
+                </p>
+            </div>
+            <% } %>
+
+                <div class="campo">
+                    <label>Aluno</label>
+
+                    <select name="alunoId" required>
+                        <option value="">Selecione um aluno</option>
+
+                        <% alunos.forEach(aluno=> { %>
+                            <option value="<%= aluno.id %>">
+                                <%= aluno.nome %> - <%= aluno.matricula %> | Semestre atual: <%= aluno.semestreAtual %>
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Disciplina</label>
+
+                    <select name="disciplinaId" required>
+                        <option value="">Selecione uma disciplina</option>
+
+                        <% disciplinas.forEach(disciplina=> { %>
+                            <option value="<%= disciplina.id %>">
+                                <%= disciplina.nome %> - <%= disciplina.semestre %>º semestre
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
+
+                <button type="submit">Cadastrar Matrícula</button>
+
+    </form>
+
+    <!-- MODAL DE SUCESSO -->
+    <% if (sucesso) { %>
+
+        <div class="modal sucesso-modal" id="modalSucesso">
+
+            <div class="modal-content sucesso-content">
+
+                <h2>Matrícula realizada com sucesso</h2>
+
+                <p>Aluno matriculado na disciplina selecionada.</p>
+
+                <% if (matriculaCadastrada) { %>
+                    <h3>Matrícula nº <%= matriculaCadastrada.id %>
+                    </h3>
+                    <% } %>
+
+                        <button onclick="fecharModal()">Fechar</button>
+
+            </div>
+
+        </div>
+
+        <% } %>
+
+            <!-- MODAL DE ERRO -->
+            <% if (erro) { %>
+
+                <div class="modal erro-modal" id="modalErro">
+
+                    <div class="modal-content erro-content">
+
+                        <h2>Erro no cadastro da matrícula</h2>
+
+                        <p>
+                            <%= erro %>
+                        </p>
+
+                        <button onclick="fecharModalErro()">Fechar</button>
+
+                    </div>
+
+                </div>
+
+                <% } %>
+
+                    <script>
+                        function fecharModal() {
+                            const modal = document.getElementById('modalSucesso');
+                            if (modal) modal.style.display = 'none';
+                        }
+
+                        function fecharModalErro() {
+                            const modal = document.getElementById('modalErro');
+                            if (modal) modal.style.display = 'none';
+                        }
+                    </script>
+
+</body>
+
+</html>

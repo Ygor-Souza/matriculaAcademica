@@ -146,3 +146,146 @@ button{
   }
 
 }
+.menu-container {
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 30px;
+  text-align: center;
+}
+
+.menu-container h1 {
+  margin-bottom: 10px;
+}
+
+.menu-container p {
+  color: #555;
+}
+
+.menu-opcoes {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.menu-card {
+  width: 240px;
+  min-height: 150px;
+  padding: 25px;
+  border-radius: 12px;
+  background: #fff;
+  text-decoration: none;
+  color: #222;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: 0.2s;
+}
+
+.menu-card:hover {
+  transform: translateY(-5px);
+}
+
+.menu-card h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.btn-voltar {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #6c757d;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-voltar:hover {
+  background: #5a6268;
+}
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.card-principal {
+  width: 100%;
+  max-width: 780px;
+  background: #fff;
+  padding: 32px;
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.topo-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.topo-pagina h1 {
+  margin: 0;
+}
+
+.topo-pagina p {
+  margin: 6px 0 0;
+  color: #666;
+}
+
+.lista-alunos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.aluno-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #f8f9fa;
+  color: #222;
+  text-decoration: none;
+  transition: 0.2s;
+  border: 1px solid #eee;
+}
+
+.aluno-card:hover {
+  background: #eef4ff;
+  transform: translateY(-2px);
+}
+
+.aluno-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #0d6efd;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.aluno-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.aluno-info span {
+  color: #666;
+  font-size: 14px;
+}
+
+.aluno-seta {
+  font-size: 22px;
+  color: #0d6efd;
+}

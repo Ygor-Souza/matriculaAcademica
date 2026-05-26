@@ -1,5 +1,7 @@
 const { Op } = require("sequelize");
 const Aluno = require("../models/Aluno");
+const Disciplina = require("../models/Disciplina");
+const Matricula = require("../models/Matricula");
 
 async function telaCadastro(req, res) {
   const sucesso = req.query.sucesso === '1';
@@ -11,6 +13,28 @@ async function telaCadastro(req, res) {
     matriculaGerada
   });
 }
+
+async function telaCadastroMatricula(req, res) {
+  const sucesso = req.query.sucesso === '1';
+  const erro = req.query.erro || null;
+
+  const alunos = await Aluno.findAll({
+    order: [['nome', 'ASC']]
+  });
+
+  const disciplinas = await Disciplina.findAll({
+    order: [['semestre', 'ASC'], ['nome', 'ASC']]
+  });
+
+  return res.render('cadastroMatricula', {
+    sucesso,
+    erro,
+    alunos,
+    disciplinas,
+    matriculaCadastrada: null
+  });
+}
+
 async function cadastrarAluno(req, res) {
   try {
     const {
@@ -201,7 +225,68 @@ async function solicitarPrerequisito(req, res) {
     }
 }
 
+async function salvarMatricula(req, res) {
+  try {
+    const { alunoId, disciplinaId } = req.body;
 
+    const aluno = await Aluno.findByPk(alunoId);
+
+    if (!aluno) {
+      return res.redirect('/cadastro-matricula?erro=Aluno não encontrado');
+    }
+
+    if (aluno.statusMatricula !== 'ATIVO') {
+      return res.redirect('/cadastro-matricula?erro=Aluno não está ativo');
+    }
+
+    const disciplina = await Disciplina.findByPk(disciplinaId);
+
+    if (!disciplina) {
+      return res.redirect('/cadastro-matricula?erro=Disciplina não encontrada');
+    }
+
+    const semestrePermitido = aluno.semestreAtual + 1;
+
+    if (disciplina.semestre !== semestrePermitido) {
+      return res.redirect(
+        `/cadastro-matricula?erro=Aluno está no ${aluno.semestreAtual}º semestre e só pode se matricular em disciplinas do ${semestrePermitido}º semestre`
+      );
+    }
+
+    const matriculaExistente = await Matricula.findOne({
+      where: {
+        alunoId,
+        disciplinaId
+      }
+    });
+
+    if (matriculaExistente) {
+      return res.redirect('/cadastro-matricula?erro=Aluno já está matriculado nessa disciplina');
+    }
+
+    await Matricula.create({
+      alunoId,
+      disciplinaId
+    });
+
+    return res.redirect('/cadastro-matricula?sucesso=1');
+
+  } catch (error) {
+    console.error(error);
+
+    return res.redirect('/cadastro-matricula?erro=Erro ao salvar matrícula');
+  }
+}
+
+async function listaAlunosPreRequisito(req, res) {
+  const alunos = await Aluno.findAll({
+    order: [['nome', 'ASC']]
+  });
+
+  return res.render('listaAlunosPreRequisito', {
+    alunos
+  });
+}
 
 
 
@@ -212,6 +297,9 @@ module.exports = {
   telaCadastroDisciplina,
   cadastrarDisciplina,
   telaListaDisciplinas,
-  solicitarPrerequisito
+  solicitarPrerequisito,
+  telaCadastroMatricula,
+  salvarMatricula,
+  listaAlunosPreRequisito
   
 };

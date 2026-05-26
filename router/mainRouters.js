@@ -3,6 +3,10 @@ const router = express.Router();
 const upload = require("../config/upload");
 const mainController = require("../controllers/mainController");
 
+router.get('/', (req, res) => {
+  res.render('menu');
+});
+
 router.get('/cadastro',mainController.telaCadastro);
 
 router.get('/cadastro-disciplina', mainController.telaCadastroDisciplina);
@@ -11,11 +15,14 @@ router.get('/disciplinas', mainController.telaListaDisciplinas);
 
 router.post('/alunos/cadastro',mainController.cadastrarAluno);
 
+router.get('/pre-requisito', mainController.listaAlunosPreRequisito);
 router.get('/pre-requisito/:id',mainController.telaPreRequisito);
 
 router.post("/pre-requisito/solicitar/:id", mainController.solicitarPrerequisito);
 
+router.get('/cadastro-matricula', mainController.telaCadastroMatricula);
 
+router.post('/cadastro-matricula', mainController.salvarMatricula);
 
 
 module.exports = router;
